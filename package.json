@@ -1,0 +1,31 @@
+{
+  "name": "LebannTrade",
+  "version": "1.0.0",
+  "description": "LebannTrade - Your go-to destination for online shopping",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "keywords": [
+    "e-commerce",
+    "shopping",
+    "online shopping",
+  ],
+  "author": "Lebo Meje & Ann Obidiegwu",
+  "license": "MIT",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.2",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.0.13",
+    "nodemon": "^2.0.14",
+    "stripe": "^8.197.0"
+  },
+  "devDependencies": {},
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}
