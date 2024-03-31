@@ -3,7 +3,7 @@ from app import app, db
 from app.models.product import Product
 from app.models.checkout import Order  # Import the Order model
 
-@app.route('/checkout', methods=['GET', 'POST'])
+@app.route('checkout', methods=['GET', 'POST'])
 def checkout_page():
     # Ensure that product_id and quantity are present in the query parameters
     product_id = request.args.get('product_id', type=int)
@@ -55,4 +55,4 @@ def checkout_page():
     # If it's a GET request, render the checkout page
     subtotal = product.cost * quantity
 
-    return render_template("root/checkout.html", product=product, quantity=quantity, subtotal=subtotal)
+    return render_template("checkout.html", product=product, quantity=quantity, subtotal=subtotal)

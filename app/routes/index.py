@@ -10,4 +10,4 @@ def home_page():
     per_page = 8
     products = Product.query.order_by(desc(Product.id)).limit(per_page).all()
 
-    return render_template("root/index.html", products=products)
+    return render_template("index.html", products=products)
