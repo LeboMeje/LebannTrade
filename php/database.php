@@ -1,8 +1,8 @@
 <?php
 // Database configuration
-$servername = "localhost";
-$username = "username";
-$password = "password";
+$servername = "MySQL:3306";
+$username = "root";
+$password = "NULL";
 $database = "e_commercedb";
 
 // Create connection
