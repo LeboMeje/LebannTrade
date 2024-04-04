@@ -1,81 +1,155 @@
-<?php
-	session_start();
-	if(!isset($_SESSION['uid'])){
-	header('Location:index.php');
-	}
- ?>	
-<!DOCTYPE html>
-<html>
-<head>
-	<meta charset="utf-8">
-	<title>LebannTrade</title>
-	<link rel="stylesheet" type="text/css" href="assets/bootstrap-3.3.6-dist/css/bootstrap.css">
-	<link rel="stylesheet" type="text/css" href="styles.css">
-</head>
-<body>
-	<div class="navbar navbar-default navbar-fixed-top" id="topnav">
-		<div class="container-fluid">
-			<div class="navbar-header">
-				<a href="index.php" class="navbar-brand">LebannTrade</a>
-			</div>
+<section id="cart_items">
+    <div class="container">
+      <div class="breadcrumbs">
+        <ol class="breadcrumb">
+          <li><a href="#">Home</a></li>
+          <li class="active">Shopping Cart</li>
+        </ol>
+      </div>
+      <div class="table-responsive cart_info"> 
+        <?php  
 
-			
-		</div>
-	</div>
-	<p><br><br></p>
-	<p><br><br></p>
+  // if (!isset($_SESSION['USERID'])){
+  //     redirect("index.php"); 
+check_message();  
+ 
+?>
+            
+                         <table  class="table table-condensed" id="table" >
+                         <thead> 
+                          <tr class="cart_menu"> 
+                             <td  >Product</td>
+                             <td >Description</td>
+                             <td  width="15%" >Price</td>
+                             <td  width="15%" >Quantity</td> 
+                             <td  width="15%" >Total</td>  
+                          </tr>
+                         </thead>  
+                          
+                             <?php
 
-	<div class="container-fluid">
-		<div class="row">
-			<div class="col-md-2"></div>
-			<div class="col-md-8">
-			<div class="row">
-				<div class="col-md-12" id="cart_msg"></div>
-			</div>
-				<div class="panel panel-primary text-center">
-					<div class="panel-heading">Cart Checkout</div>
-					<div class="panel-body"></div>
-					<div class="row">
-						<div class="col-md-2"><b>Action</b></div>
-						<div class="col-md-2"><b>Product Image</b></div>
-						<div class="col-md-2"><b>Product Name</b></div>
-						<div class="col-md-2"><b>Product Price</b></div>
-						<div class="col-md-2"><b>Quantity</b></div>
-						<div class="col-md-2"><b>Price in $</b></div>
-					</div>
-					<br><br>
-					<div id='cartdetail'>
-					<!--<div class="row">
-						<div class="col-md-2"><a href="#" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span></a>
-						<a href="#" class="btn btn-success"><span class="glyphicon glyphicon-ok-sign"></span></a>
-						</div>
-						<div class="col-md-2"><img src="assets/prod_images/tshirt.JPG" width="60px" height="60px"></div>
-						<div class="col-md-2">Tshirt</div>
-						<div class="col-md-2">$700</div>
-						<div class="col-md-2"><input class="form-control" type="text" size="10px" value='1'></div>
-						<div class="col-md-2"><input class="form-control" type="text" size="10px" value='700'></div>
-					</div>-->
-					</div>
-					<!--<div class="row">
-						<div class="col-md-8"></div>
-						<div class="col-md-4">
-							<b>Total: $500000</b>
-						</div>
-					</div>-->
-					<div class="panel-footer">
 
-					</div>
-				</div>
-				<button class='btn btn-success btn-lg pull-right' id='checkout_btn' data-toggle="modal" data-target="#myModal">Checkout</button>
-			</div>
 
-			<div class="col-md-2"></div>
-		</div>
-	</div>
+                              if (!empty($_SESSION['gcCart'])){ 
 
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-	<script type="text/javascript" src="//cdn.jsdelivr.net/jquery.slick/1.6.0/slick.min.js"></script>
-	<script src="assets/bootstrap-3.3.6-dist/js/bootstrap.min.js"></script>
-	<script src="main.js"></script>	
-</body>
-</html>
+                                echo '<script>totalprice()</script>';
+
+                                  $count_cart = count($_SESSION['gcCart']);
+
+                                for ($i=0; $i < $count_cart  ; $i++) { 
+ 
+                                       $query = "SELECT * FROM `tblpromopro` pr , `tblproduct` p , `tblcategory` c
+                                                 WHERE pr.`PROID`=p.`PROID` AND  p.`CATEGID` = c.`CATEGID`  and p.`PROID` = '".@$_SESSION['gcCart'][$i]['productid']."'";
+                                       $mydb->setQuery($query);
+                                      $cur = $mydb->loadResultList();
+                                
+                                
+                                 foreach ($cur as $result) {
+
+                                ?>
+                                <tr>
+                                  <td>  
+                                    <img src="<?php echo web_root. 'admin/products/'.$result->IMAGES; ?>"  onload="  totalprice() " width="50px" height="50px"> 
+                                  <br/> 
+                                        <?php    
+                                          
+                                              
+                                            if (isset($_SESSION['CUSID'])){  
+
+                                              echo ' <a href="'.web_root. 'customer/controller.php?action=addwish&proid='.$result->PROID.'" title="Add to wishlist">Add to wishlist</a>
+             ';
+                                           
+                                             }else{
+                                               echo   '<a href="#" title="Add to wishlist" class="proid"  data-target="#smyModal" data-toggle="modal" data-id="'.  $result->PROID.'">Add to wishlist</a>
+             ';
+                                            } 
+                                  
+
+
+
+                                          ?>
+
+
+
+
+                                 </td>
+                                  <td>  
+                                    <?php echo  $result->PRODESC ; ?>
+                                  </td>
+                                  <td>
+                                    <input type="hidden"    id ="PROPRICE<?php echo $result->PROID;  ?>" name="PROPRICE<?php echo $result->PROID; ?>" value="<?php echo  $result->PRODISPRICE ; ?>" >
+                                     
+                                  &#8369  <?php echo  $result->PRODISPRICE ; ?>
+                                  </td>
+                                  <td class="input-group custom-search-form" >
+                                       <input type="hidden" maxlength="3" class="form-control input-sm"  autocomplete="off"  id ="ORIGQTY<?php echo $result->PROID;  ?>" name="ORIGQTY<?php echo $result->PROID; ?>" value="<?php echo $result->PROQTY; ?>"   placeholder="Search for...">
+                                        
+                                        <input type="number" maxlength="3" data-id="<?php echo $result->PROID;  ?>" class="QTY form-control input-sm"  autocomplete="off"  id ="QTY<?php echo $result->PROID;  ?>" name="QTY<?php echo $result->PROID; ?>" value="<?php echo $_SESSION['gcCart'][$i]['qty']; ?>"   placeholder="Search for...">
+                                        <span class="input-group-btn">
+                                                <a title="Remove Item"  class="btn btn-danger btn-sm" id="btnsearch" name="btnsearch" href="cart/controller.php?action=delete&id=<?php echo $result->PROID; ?>">
+                                                <i class="fa fa-trash-o"></i>
+                                            </a>
+                                        </span>
+                                        </td>
+                                      
+                                        <input type="hidden"    id ="TOT<?php echo $result->PROID;  ?>" name="TOT<?php echo $result->PROID; ?>" value="<?php echo  $result->PRODISPRICE ; ?>" >
+                                   
+                                     <td> &#8369 <output id="Osubtot<?php echo $result->PROID ?>"><?php echo   $_SESSION['gcCart'][$i]['price'] ; ?></output></td>
+                                </tr>
+         
+                            <?php  
+                                 }
+                               }
+                               }else{ 
+                                  echo "<h1>There is no item in the cart.</h1>";
+                               } 
+                            ?>  
+                                
+                      </table> 
+
+     
+                        <h3 align="right"> Total  &#8369<span id="sum">0</span></h3> 
+    </div>
+  </div>  
+ 
+</section>
+<section id="do_action">
+    <div class="container">
+      <div class="heading">
+        <h3>What would you like to do next?</h3>
+        <p>Choose if you have a discount code or reward points you want to use or would like to estimate your delivery cost.</p>
+      </div>
+      <div class="row">
+     <form action="index.php?q=orderdetails" method="post">
+   <a href="index.php?q=product" class="btn btn-default check_out pull-left ">
+   <i class="fa fa-arrow-left fa-fw"></i>
+   Add New Order
+   </a>
+
+     <?php    
+  
+                     $countcart =isset($_SESSION['gcCart'])? count($_SESSION['gcCart']) : "0";
+                   if ($countcart > 0){
+  
+                  if (isset($_SESSION['CUSID'])){  
+               
+                    echo '<button type="submit"  name="proceed" id="proceed" class="btn btn-default check_out btn-pup pull-right">
+                            Proceed And Checkout
+                            <i class="fa  fa-arrow-right fa-fw"></i>
+                            </button>';
+                 
+                   }else{
+                     echo   '<a data-target="#smyModal" data-toggle="modal" class="btn btn-default check_out signup pull-right" href="">
+                              Proceed And Checkout
+                              <i class="fa  fa-arrow-right fa-fw"></i>
+                              </a>';
+                  } 
+                }
+
+
+
+                ?>
+ </form>
+      </div>
+    </div>
+  </section><!--/#do_action-->

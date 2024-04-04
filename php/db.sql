@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 13, 2017 at 02:36 PM
+-- Generation Time: Apr 04, 2024 at 04:36 PM
 -- Server version: 10.1.16-MariaDB
 -- PHP Version: 7.0.9
 
@@ -17,7 +17,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `amaclone`
+-- Database: `e_commercedb`
 --
 CREATE DATABASE IF NOT EXISTS `e_commercedb` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
 USE `e_commercedb`;

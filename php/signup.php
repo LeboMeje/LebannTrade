@@ -1,115 +1,140 @@
-<?php 
-	
-	include('dbconnect.php');
-	
-	$f_name=$_POST['f_name'];
-	$l_name=$_POST['l_name'];
-	$email=$_POST['email'];
-	$password=md5($_POST['password']);
-	$mobile=$_POST['mobile'];
-	$address1=$_POST['address1'];
-	$address2=$_POST['address2'];
-	$name = "/^[A-Z][a-zA-Z ]+$/";
-	$emailValidation = "/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9]+(\.[a-z]{2,4})$/";
-	$number = "/^[0-9]+$/";
+ <?php
+  $customer = New customer;
+  $res = $customer->single_customer($_SESSION['CUSID']);
+ 
+  ?>  
+<h3>Your Account</h3>
+  <form  class="form-horizontal span6" action="customer/controller.php?action=edit" onsubmit="return personalInfo();" name="personal" method="POST" enctype="multipart/form-data"> 
+          <div class="row">
+             <div class="col-lg-6">
+            <div class="form-group">
+              <div class="col-md-12">
+                <label class="col-md-4 control-label" for=
+                "FNAME">First Name:</label>
+                  <div class="col-md-8">
+                   <input class="form-control input-sm" id="FNAME" name="FNAME" placeholder=
+                      "First Name" type="text" value="<?php echo $res->FNAME; ?>">
+                </div>
+              </div>
+            </div>
+           </div>   
+           
+           <div class="col-lg-6"> 
+            <div class="form-group">
+              <div class="col-md-12">
+                <label class="col-md-4 control-label" for=
+                "LNAME">Last Name:</label>
+
+                <div class="col-md-8">
+                   <input class="form-control input-sm" id="LNAME" name="LNAME" placeholder=
+                      "Last Name" type="text" value="<?php echo $res->LNAME; ?>">
+                </div>
+              </div>
+            </div>
+           </div>   
+
+         
+            <div class="col-lg-6">
+             
+             <div class="form-group">
+              <div class="col-md-12">
+                <label class="col-md-4 control-label" for=
+                "CITYADD">Municipality/City:</label>
+
+                <div class="col-md-8">
+                   <input class="form-control input-sm" id="CITYADD" name="CITYADD" placeholder=
+                      "Municipality/City Address" type="text" value="<?php echo $res->CITYADD; ?>">
+                </div>
+              </div>
+            </div>
+
+           </div>  
 
 
-	if(empty($f_name) || empty($l_name) || empty($email) || empty($password) || empty($mobile) || empty($address1) || empty($address2)){
-		echo "<div class='alert alert-danger alert-dismissible' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>Please fill all the fields!</div>";
-		exit(0);
-	}
-	else{
-		if(!preg_match($name,$f_name)){
-		echo "
-			<div class='alert alert-warning'>
-				<a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
-				<b>this $f_name is not valid..!</b>
-			</div>
-		";
-		exit();
-		}
+       
+  
 
-		if(!preg_match($name,$l_name)){
-		echo "
-			<div class='alert alert-warning'>
-				<a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
-				<b>this $l_name is not valid..!</b>
-			</div>
-		";
-		exit();
-		}
+            <div class="col-lg-6"> 
+                <div class="form-group">
+                <div class="col-md-12">
+                  <label class="col-md-4 control-label" for=
+                  "PHONE">Contact#:</label>
 
-		if(!preg_match($emailValidation,$email)){
-		echo "
-			<div class='alert alert-warning'>
-				<a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
-				<b>this $email is not valid..!</b>
-			</div>
-		";
-		exit();
-		}
+                  <div class="col-md-8">
+                     <input class="form-control input-sm" id="PHONE" name="PHONE" placeholder=
+                        "Contact Number" type="text" value="<?php echo $res->PHONE; ?>">
+                  </div>
+                </div>
+              </div> 
+           </div> 
 
-		if(strlen($password) < 9 ){
-		echo "
-			<div class='alert alert-warning'>
-				<a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
-				<b>Password is weak</b>
-			</div>
-		";
-		exit();
-		}
+             <div class="col-lg-6">
+              <div class="form-group">
+                <div class="col-md-12">
+                  <label class="col-md-4 control-label" for=
+                  "CUSUNAME">Username:</label>
 
-		if(!preg_match($number,$mobile)){
-		echo "
-			<div class='alert alert-warning'>
-				<a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
-				<b>Mobile number $mobile is not valid</b>
-			</div>
-		";
-		exit();
-		}
+                  <div class="col-md-8">
+                     <input class="form-control input-sm" id="CUSUNAME" name="CUSUNAME" placeholder=
+                        "Username" type="text" value="<?php echo $res->CUSUNAME; ?>">
+                  </div>
+                </div>
+              </div> 
+           </div>  
+     <div class="col-lg-6">
+          <div class="form-group">
+            <div class="col-md-12">
+              <label class="col-md-4 control-label" for=
+              "GENDER">Gender:</label>
 
-		if(!(strlen($mobile) == 10)){
-		echo "
-			<div class='alert alert-warning'>
-				<a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
-				<b>Mobile number must be 10 digit</b>
-			</div>
-		";
-		exit();
-		}
+              <div class="col-lg-8"> 
+                <input  id="GENDER" name="GENDER"  type="radio" <?php echo ($res->GENDER=='Male') ? 'CHECKED' : '' ;  ?>   value="Male" /><b> Male </b>
+                    <input   id="GENDER"   name="GENDER"   type="radio" <?php echo ($res->GENDER=='Female') ? 'CHECKED' : '' ; ?> value="Female" /> <b> Female </b>
+              </div>
+            </div>
+          </div>
+          </div>
+      
+          </div>
+          
+           
 
-		//check for available user-details
-		$sql = "SELECT user_id FROM user_info WHERE email = '$email' LIMIT 1" ;
-		$check_query = mysqli_query($conn,$sql);
-		$count_email = mysqli_num_rows($check_query);
+          <div class="col-lg-6"> 
+              <div class="form-group">
+                <div class="col-md-12">
+                   <label class="col-md-4" align = "right"for=
+                  "btn"></label>
+                  <div class="col-md-8">
+                    <input type="submit"  name="save"  value="Save"  class="submit btn btn-primary btn-lg"  />
+                      
+                </div>
+              </div>
+            </div>
+         </div>     
+  </form>   
+  
+   
+                
+ 
+                  
 
-		if($count_email > 0){
-		echo "
-			<div class='alert alert-danger'>
-				<a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
-				<b>Email Address is already available Try Another email address</b>
-			</div>
-		";
-		exit();
-		}
+                               
+                
 
-		else {
-					$sql="INSERT INTO user_info (first_name, last_name, email, password, mobile, address1, address2) VALUES ('$f_name','$l_name','$email','$password','$mobile','$address1','$address2')";
-					$run_query=mysqli_query($conn,$sql);
-					if($run_query){
-						echo "
-								<div class='alert alert-success'>
-									<a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
-									Click <b><a href='index.php'>here</a></b> to login.
-								</div>
-						";
-					}
-			}
-		}
-	
 
-	
 
-	
- ?>
+
+
+ 
+              
+
+
+
+
+
+
+
+
+                   
+        
+        </form>
